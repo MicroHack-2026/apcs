@@ -2,7 +2,6 @@ import { ContainerItem, BookingResponse } from "@/lib/types";
 import { bookingService } from "./booking.service";
 import { authService } from "./auth.service";
 import { apiClient, PagedResponse } from "./apiClient";
-import { P } from "vitest/dist/chunks/environment.d.cL3nLXbE.js";
 
 /**
  * Containers Service
@@ -58,15 +57,12 @@ export const containersService = {
     if (!session?.userId) {
       return {
         content: [],
-        pageable: { pageNumber: 0, pageSize: size },
         totalElements: 0,
         totalPages: 0,
-        last: true,
-        first: true,
         size,
         number: 0,
-        numberOfElements: 0,
-        empty: true,
+        first: true,
+        last: true,
       };
     }
 
