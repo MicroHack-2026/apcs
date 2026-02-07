@@ -33,12 +33,12 @@ export function QrCodeCanvas({
     <div className="flex flex-col items-center gap-4">
       <canvas
         ref={canvasRef}
-        className="glass-primary-panel p-2"
+        className="bg-white border border-border rounded-xl p-2 shadow-card"
         style={{ width: size, height: size }}
       />
       {showDownload && (
-        <Button onClick={handleDownload} variant="glass-outline">
-          Download
+        <Button onClick={handleDownload} variant="outline" size="sm">
+          Download QR
         </Button>
       )}
     </div>

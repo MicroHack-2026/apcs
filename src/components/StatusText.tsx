@@ -10,31 +10,31 @@ export function StatusText({ arrived, scheduled, className }: StatusTextProps) {
   if (scheduled) {
     return (
       <span className={cn(
-        "inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium",
-        "glass-pill-scheduled",
+        "inline-flex items-center px-3 py-1 rounded-full text-xs font-medium",
+        "bg-accent/10 text-accent border border-accent/20",
         className
       )}>
         Scheduled
       </span>
     );
   }
-  
+
   if (arrived) {
     return (
       <span className={cn(
-        "inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium",
-        "glass-pill-arrived",
+        "inline-flex items-center px-3 py-1 rounded-full text-xs font-medium",
+        "bg-status-arrived text-status-arrived border border-status-arrived/20",
         className
       )}>
-        Container Arrived
+        Arrived
       </span>
     );
   }
-  
+
   return (
     <span className={cn(
-      "inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium",
-      "glass-pill-not-arrived",
+      "inline-flex items-center px-3 py-1 rounded-full text-xs font-medium",
+      "bg-status-not-arrived text-status-not-arrived border border-status-not-arrived/20",
       className
     )}>
       Not Arrived
@@ -42,7 +42,6 @@ export function StatusText({ arrived, scheduled, className }: StatusTextProps) {
   );
 }
 
-// Generic status pill for Active/Disabled states
 interface StatusPillProps {
   status: "Active" | "Disabled";
   className?: string;
@@ -51,8 +50,10 @@ interface StatusPillProps {
 export function StatusPill({ status, className }: StatusPillProps) {
   return (
     <span className={cn(
-      "inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-medium",
-      status === "Active" ? "glass-pill-active" : "glass-pill-disabled",
+      "inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium",
+      status === "Active"
+        ? "bg-status-arrived text-status-arrived border border-status-arrived/20"
+        : "bg-status-not-arrived text-status-not-arrived border border-status-not-arrived/20",
       className
     )}>
       {status}

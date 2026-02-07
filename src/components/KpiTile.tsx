@@ -13,12 +13,12 @@ export function KpiTile({ title, value, subtitle, valueClassName, onClick }: Kpi
     <div
       onClick={onClick}
       className={cn(
-        "glass-primary-card p-5",
-        onClick && "cursor-pointer"
+        "bg-white border border-border rounded-xl p-5 shadow-card transition-all duration-150",
+        onClick && "cursor-pointer hover:shadow-card-hover"
       )}
     >
       <p className="text-sm font-medium text-muted-foreground mb-2">{title}</p>
-      <p className={cn("text-3xl font-semibold text-foreground", valueClassName)}>
+      <p className={cn("text-3xl font-semibold text-foreground tabular-nums", valueClassName)}>
         {value}
       </p>
       {subtitle && (

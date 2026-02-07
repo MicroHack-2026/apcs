@@ -72,12 +72,12 @@ export default function AdminSettingsPage() {
   return (
     <LayoutShell showSidebar={true} role="ADMIN">
       <div className="space-y-6 max-w-2xl">
-        <div className="glass-primary-panel p-5 section-animate">
+        <div>
           <h1 className="text-2xl font-semibold text-foreground">Settings</h1>
           <p className="text-muted-foreground mt-1">Configure platform properties</p>
         </div>
 
-        <div className="glass-section p-6 space-y-5 section-animate">
+        <div className="bg-white border border-border rounded-xl p-6 space-y-5 shadow-card">
           <h2 className="text-lg font-semibold text-foreground">General</h2>
           
           <div className="space-y-2">
@@ -86,7 +86,6 @@ export default function AdminSettingsPage() {
               id="platformName"
               value={localSettings.platformName}
               onChange={(e) => setLocalSettings({ ...localSettings, platformName: e.target.value })}
-              className="glass-control"
             />
           </div>
 
@@ -96,10 +95,10 @@ export default function AdminSettingsPage() {
               value={localSettings.defaultTimeZone}
               onValueChange={(value) => setLocalSettings({ ...localSettings, defaultTimeZone: value })}
             >
-              <SelectTrigger className="glass-control">
+              <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="glass-strong border-[rgba(87,106,255,0.25)]">
+              <SelectContent>
                 {timeZones.map((tz) => (
                   <SelectItem key={tz} value={tz}>
                     {tz}
@@ -110,7 +109,7 @@ export default function AdminSettingsPage() {
           </div>
         </div>
 
-        <div className="glass-section p-6 space-y-5 section-animate">
+        <div className="bg-white border border-border rounded-xl p-6 space-y-5 shadow-card">
           <h2 className="text-lg font-semibold text-foreground">Slot Configuration</h2>
           
           <div className="space-y-2">
@@ -119,10 +118,10 @@ export default function AdminSettingsPage() {
               value={String(localSettings.slotDurationMinutes)}
               onValueChange={(value) => setLocalSettings({ ...localSettings, slotDurationMinutes: Number(value) })}
             >
-              <SelectTrigger className="glass-control">
+              <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="glass-strong border-[rgba(87,106,255,0.25)]">
+              <SelectContent>
                 {slotDurations.map((dur) => (
                   <SelectItem key={dur.value} value={dur.value}>
                     {dur.label}
@@ -141,12 +140,11 @@ export default function AdminSettingsPage() {
               max={100}
               value={localSettings.defaultCapacity}
               onChange={(e) => setLocalSettings({ ...localSettings, defaultCapacity: Number(e.target.value) })}
-              className="glass-control"
             />
           </div>
         </div>
 
-        <div className="glass-section p-6 space-y-5 section-animate">
+        <div className="bg-white border border-border rounded-xl p-6 space-y-5 shadow-card">
           <h2 className="text-lg font-semibold text-foreground">Notifications</h2>
           
           <div className="flex items-center justify-between py-2">
@@ -157,7 +155,6 @@ export default function AdminSettingsPage() {
             <Switch
               checked={localSettings.notifyOnBooking}
               onCheckedChange={(checked) => setLocalSettings({ ...localSettings, notifyOnBooking: checked })}
-              className="glass-switch"
             />
           </div>
 
@@ -169,7 +166,6 @@ export default function AdminSettingsPage() {
             <Switch
               checked={localSettings.notifyOnArrival}
               onCheckedChange={(checked) => setLocalSettings({ ...localSettings, notifyOnArrival: checked })}
-              className="glass-switch"
             />
           </div>
 
@@ -181,12 +177,11 @@ export default function AdminSettingsPage() {
             <Switch
               checked={localSettings.notifyOnCancellation}
               onCheckedChange={(checked) => setLocalSettings({ ...localSettings, notifyOnCancellation: checked })}
-              className="glass-switch"
             />
           </div>
         </div>
 
-        <div className="glass-section p-6 section-animate">
+        <div className="bg-white border border-border rounded-xl p-6 shadow-card">
           <h2 className="text-lg font-semibold text-foreground mb-5">Maintenance</h2>
           
           <div className="flex items-center justify-between py-2">
@@ -197,12 +192,11 @@ export default function AdminSettingsPage() {
             <Switch
               checked={localSettings.maintenanceMode}
               onCheckedChange={(checked) => setLocalSettings({ ...localSettings, maintenanceMode: checked })}
-              className="glass-switch"
             />
           </div>
         </div>
 
-        <div className="flex items-center gap-4 section-animate">
+        <div className="flex items-center gap-4">
           <Button 
             onClick={handleSave} 
             disabled={updateMutation.isPending}
@@ -210,7 +204,7 @@ export default function AdminSettingsPage() {
             {updateMutation.isPending ? "Saving..." : "Save Changes"}
           </Button>
           <Button 
-            variant="glass-outline" 
+            variant="outline" 
             onClick={handleReset} 
             disabled={updateMutation.isPending}
           >

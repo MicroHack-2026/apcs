@@ -94,11 +94,11 @@ export default function AdminUsersPage() {
   const getRoleBadgeClass = (role: Role) => {
     switch (role) {
       case "ADMIN":
-        return "glass-pill-scheduled";
+        return "bg-accent/10 text-accent border border-accent/20";
       case "MANAGER":
-        return "glass-pill-arrived";
+        return "bg-status-arrived/10 text-status-arrived border border-status-arrived/20";
       case "ENTERPRISE":
-        return "bg-secondary/50 backdrop-blur-sm border border-border/30 text-foreground";
+        return "bg-secondary text-foreground border border-border";
     }
   };
 
@@ -115,7 +115,7 @@ export default function AdminUsersPage() {
           </Button>
         </div>
 
-        <div className="glass-primary-panel overflow-hidden py-2">
+        <div className="bg-white border border-border rounded-xl overflow-hidden py-2 shadow-card">
           {isLoading ? (
             <div className="py-12 text-center text-muted-foreground">
               Loading users...
@@ -172,7 +172,7 @@ export default function AdminUsersPage() {
         </div>
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent className="glass-strong glass-round border-[rgba(87,106,255,0.25)]">
+          <DialogContent>
             <DialogHeader>
               <DialogTitle>{editingUser ? "Edit User" : "Add User"}</DialogTitle>
               <DialogDescription>
@@ -237,7 +237,7 @@ export default function AdminUsersPage() {
             </div>
 
             <DialogFooter>
-              <Button variant="glass-outline" onClick={() => setIsDialogOpen(false)}>
+              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
                 Cancel
               </Button>
               <Button 

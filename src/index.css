@@ -1,8 +1,5 @@
-@import "./styles/glass.css";
-
 @tailwind base;
 
-/* Hide ALL html5-qrcode default overlays and scanning boxes */
 #qr-reader {
   border: none !important;
 }
@@ -32,14 +29,13 @@
   display: none !important;
 }
 
-/* Hide the scanning box/qrbox overlay */
 [style*="border-width"][style*="border-style: solid"] {
   display: none !important;
 }
+
 @tailwind components;
 @tailwind utilities;
 
-/* Product Sans Font */
 @font-face {
   font-family: 'Product Sans';
   src: local('Product Sans'), local('ProductSans-Regular');
@@ -63,64 +59,59 @@
 
 @layer base {
   :root {
-    /* Core backgrounds */
     --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
-    
-    /* Cards & panels */
+    --foreground: 220 13% 10%;
+
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
-    
-    /* Popovers & dialogs */
+    --card-foreground: 220 13% 10%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    
-    /* Primary - #040CAD */
-    --primary: 231 95% 35%;
+    --popover-foreground: 220 13% 10%;
+
+    --primary: 236 95% 36%;
     --primary-foreground: 0 0% 100%;
-    
-    /* Secondary - Light gray surfaces */
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 0%;
-    
-    /* Muted - Subtle backgrounds */
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    
-    /* Accent - #576AFF */
-    --accent: 231 100% 67%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 13% 10%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 233 100% 67%;
     --accent-foreground: 0 0% 100%;
-    
-    /* Status colors */
+
     --status-arrived: 142 70% 45%;
     --status-not-arrived: 0 72% 51%;
-    --status-scheduled: 231 100% 67%;
-    
-    /* Destructive */
+    --status-scheduled: 233 100% 67%;
+
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    
-    /* Borders & inputs */
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 231 100% 67%;
-    
-    --radius: 0.5rem;
-    
-    /* Sidebar */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 20%;
-    --sidebar-primary: 0 0% 0%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 233 100% 67%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 13% 20%;
+    --sidebar-primary: 236 95% 36%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 231 100% 67%;
+    --sidebar-accent: 233 100% 67%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 92%;
-    --sidebar-ring: 231 100% 67%;
+    --sidebar-border: 220 13% 93%;
+    --sidebar-ring: 233 100% 67%;
+
+    --chart-1: 233 100% 67%;
+    --chart-2: 142 70% 45%;
+    --chart-3: 0 72% 51%;
+    --chart-4: 260 60% 55%;
+    --chart-5: 35 90% 55%;
   }
 
   .dark {
     --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    --foreground: 220 13% 10%;
   }
 }
 
@@ -139,28 +130,131 @@
   }
 }
 
-/* Custom utility classes */
 @layer utilities {
   .text-status-arrived {
     color: hsl(var(--status-arrived));
   }
-  
+
   .text-status-not-arrived {
     color: hsl(var(--status-not-arrived));
   }
-  
+
   .text-status-scheduled {
     color: hsl(var(--status-scheduled));
   }
-  
-  .bg-accent-active {
-    background-color: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
+
+  .bg-status-arrived {
+    background-color: hsl(var(--status-arrived) / 0.1);
+  }
+
+  .bg-status-not-arrived {
+    background-color: hsl(var(--status-not-arrived) / 0.1);
+  }
+
+  .bg-status-scheduled {
+    background-color: hsl(var(--status-scheduled) / 0.1);
   }
 }
 
-/* Backdrop blur for modal */
-.backdrop-blur-modal {
-  backdrop-filter: blur(4px);
-  background-color: rgba(0, 0, 0, 0.3);
+@layer components {
+  .card-surface {
+    @apply bg-white border border-border rounded-xl shadow-sm;
+  }
+
+  .card-surface-hover {
+    @apply bg-white border border-border rounded-xl shadow-sm transition-all duration-150;
+  }
+  .card-surface-hover:hover {
+    @apply shadow-md border-border;
+  }
+}
+
+@keyframes list-item-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes section-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.list-item-animate {
+  animation: list-item-slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.list-item-animate:nth-child(1) { animation-delay: 0ms; }
+.list-item-animate:nth-child(2) { animation-delay: 40ms; }
+.list-item-animate:nth-child(3) { animation-delay: 80ms; }
+.list-item-animate:nth-child(4) { animation-delay: 120ms; }
+.list-item-animate:nth-child(5) { animation-delay: 160ms; }
+.list-item-animate:nth-child(6) { animation-delay: 200ms; }
+.list-item-animate:nth-child(7) { animation-delay: 240ms; }
+.list-item-animate:nth-child(8) { animation-delay: 280ms; }
+.list-item-animate:nth-child(9) { animation-delay: 320ms; }
+.list-item-animate:nth-child(10) { animation-delay: 360ms; }
+.list-item-animate:nth-child(n+11) { animation-delay: 400ms; }
+
+.section-animate {
+  animation: section-fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.section-animate:nth-child(1) { animation-delay: 0ms; }
+.section-animate:nth-child(2) { animation-delay: 80ms; }
+.section-animate:nth-child(3) { animation-delay: 160ms; }
+.section-animate:nth-child(4) { animation-delay: 240ms; }
+.section-animate:nth-child(5) { animation-delay: 320ms; }
+.section-animate:nth-child(6) { animation-delay: 400ms; }
+
+.qr-frame-corner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-color: hsl(233 100% 67%);
+  border-style: solid;
+  border-width: 0;
+}
+
+.qr-frame-corner--top-left {
+  top: 0;
+  left: 0;
+  border-top-width: 3px;
+  border-left-width: 3px;
+  border-top-left-radius: 8px;
+}
+
+.qr-frame-corner--top-right {
+  top: 0;
+  right: 0;
+  border-top-width: 3px;
+  border-right-width: 3px;
+  border-top-right-radius: 8px;
+}
+
+.qr-frame-corner--bottom-left {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 3px;
+  border-left-width: 3px;
+  border-bottom-left-radius: 8px;
+}
+
+.qr-frame-corner--bottom-right {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 3px;
+  border-right-width: 3px;
+  border-bottom-right-radius: 8px;
 }

@@ -109,7 +109,7 @@ export default function AdminEnterpriseOwnersPage() {
           </Button>
         </div>
 
-        <div className="glass-primary-panel overflow-hidden py-2">
+        <div className="bg-white border border-border rounded-xl overflow-hidden py-2 shadow-card">
           {isLoading ? (
             <div className="py-12 text-center text-muted-foreground">
               Loading enterprise owners...
@@ -158,7 +158,7 @@ export default function AdminEnterpriseOwnersPage() {
         </div>
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent className="glass-strong glass-round border-[rgba(87,106,255,0.25)]">
+          <DialogContent>
             <DialogHeader>
               <DialogTitle>{editingOwner ? "Edit Enterprise Owner" : "Add Enterprise Owner"}</DialogTitle>
               <DialogDescription>
@@ -216,7 +216,7 @@ export default function AdminEnterpriseOwnersPage() {
             </div>
 
             <DialogFooter>
-              <Button variant="glass-outline" onClick={() => setIsDialogOpen(false)}>
+              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
                 Cancel
               </Button>
               <Button 

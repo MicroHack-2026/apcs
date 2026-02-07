@@ -3,12 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const itemVariants = cva(
-  "flex items-center gap-4 px-5 py-4 transition-all duration-200 glass-list-item rounded-xl mx-2 my-1 list-item-animate",
+  "flex items-center gap-4 px-5 py-4 transition-all duration-150 rounded-xl mx-2 my-0.5 list-item-animate",
   {
     variants: {
       variant: {
-        default: "",
-        outline: "border border-border/50 rounded-xl mb-2 last:mb-0",
+        default: "hover:bg-secondary/60",
+        outline: "border border-border rounded-xl mb-2 last:mb-0 hover:shadow-card",
       },
     },
     defaultVariants: {
@@ -48,7 +48,7 @@ const ItemMedia = React.forwardRef<
     ref={ref}
     className={cn(
       "flex-shrink-0 flex items-center justify-center bg-secondary text-foreground font-medium text-sm",
-      variant === "avatar" ? "w-10 h-10 rounded-full" : "w-10 h-10 rounded-md",
+      variant === "avatar" ? "w-10 h-10 rounded-full" : "w-10 h-10 rounded-lg",
       className
     )}
     {...props}

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 interface TimeSlotsPickerProps {
   availableHours: string[];
@@ -22,7 +21,7 @@ export function TimeSlotsPicker({
 
   return (
     <div className="space-y-3">
-      <p className="text-sm text-muted-foreground">Select a time slot:</p>
+      <p className="text-sm text-muted-foreground">Select a 30-minute time slot:</p>
       <div className="grid grid-cols-4 gap-2">
         {availableHours.map((hour) => (
           <Button

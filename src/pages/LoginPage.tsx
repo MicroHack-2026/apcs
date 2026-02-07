@@ -12,7 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoginBackground } from "@/components/LoginBackground";
 import portlyLogo from "@/assets/logo.svg";
 
@@ -36,7 +35,7 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       await authService.login(username, password, role as Role);
-      
+
       switch (role) {
         case "ADMIN":
           navigate("/admin/dashboard");
@@ -48,7 +47,7 @@ export default function LoginPage() {
           navigate("/manager/scan");
           break;
       }
-    } catch (err) {
+    } catch {
       setError("Login failed. Please try again.");
     } finally {
       setIsLoading(false);
@@ -56,92 +55,108 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex relative">
+    <div className="min-h-screen bg-white flex relative">
       <LoginBackground />
-      
-      {/* Left Side - Logo, Title & Description */}
+
       <div className="flex-1 flex flex-col justify-center px-12 lg:px-20 relative z-10">
         <div className="max-w-md">
-          <div className="flex items-center gap-3 mb-4">
-            <img src={portlyLogo} alt="Portly" className="w-14 h-14" />
-            <h1 className="text-5xl font-bold text-foreground">
+          <div className="flex items-center gap-3 mb-6">
+            <img src={portlyLogo} alt="Portly" className="w-12 h-12" />
+            <h1 className="text-4xl font-bold text-foreground">
               Portly
             </h1>
           </div>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Portly is a modern port operations platform for managing container arrivals, appointments, slot scheduling, and real-time terminal coordination through a clean, productivity-focused interface.
+          <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+            Modern port operations platform for managing container arrivals, pickup appointments, and real-time terminal coordination.
           </p>
+
+          <div className="space-y-3 text-sm text-muted-foreground">
+            <div className="flex items-start gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+              <span>Real-time container arrival tracking</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+              <span>30-minute slot appointment scheduling</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+              <span>QR code gate access verification</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0" />
+              <span>Global container visibility dashboard</span>
+            </div>
+          </div>
         </div>
       </div>
-      
-      {/* Right Side - Login Card */}
+
       <div className="flex-1 flex items-center justify-center p-6 relative z-10">
-        <div className="w-full max-w-md">
-          <Card className="border border-border/50 shadow-sm">
-            <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-xl font-semibold">
+        <div className="w-full max-w-sm">
+          <div className="bg-white border border-border rounded-2xl shadow-lg p-8">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-foreground">
                 Sign in
-              </CardTitle>
-              <CardDescription>
+              </h2>
+              <p className="text-sm text-muted-foreground mt-1">
                 Enter your credentials to access the platform
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {error && (
-                  <div className="p-3 text-sm text-status-not-arrived bg-secondary rounded-md">
-                    {error}
-                  </div>
-                )}
-                
-                <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    type="text"
-                    placeholder="Enter your username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="h-11"
-                  />
-                </div>
+              </p>
+            </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="h-11"
-                  />
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {error && (
+                <div className="p-3 text-sm text-status-not-arrived bg-status-not-arrived rounded-lg">
+                  {error}
                 </div>
+              )}
 
-                <div className="space-y-2">
-                  <Label htmlFor="role">Role</Label>
-                  <Select value={role} onValueChange={(value: Role) => setRole(value)}>
-                    <SelectTrigger className="h-11">
-                      <SelectValue placeholder="Select your role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="ADMIN">Admin</SelectItem>
-                      <SelectItem value="ENTERPRISE">Enterprise</SelectItem>
-                      <SelectItem value="MANAGER">Manager</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="Enter your username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="h-11"
+                />
+              </div>
 
-                <Button
-                  type="submit"
-                  className="w-full h-11"
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Logging in..." : "Login"}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-11"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="role">Role</Label>
+                <Select value={role} onValueChange={(value: Role) => setRole(value)}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Select your role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ADMIN">Admin</SelectItem>
+                    <SelectItem value="ENTERPRISE">Enterprise</SelectItem>
+                    <SelectItem value="MANAGER">Manager</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full h-11"
+                disabled={isLoading}
+              >
+                {isLoading ? "Signing in..." : "Sign in"}
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

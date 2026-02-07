@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { format, parseISO, isSameDay } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
 
 interface CalendarPickerProps {
   availableDates: string[];
@@ -15,12 +14,11 @@ export function CalendarPicker({
   onDateSelect,
 }: CalendarPickerProps) {
   const [month, setMonth] = useState<Date>(new Date());
-  
-  // Convert string dates to Date objects for comparison
+
   const availableDateObjects = availableDates.map((d) => parseISO(d));
-  
+
   const isDateAvailable = (date: Date) => {
-    return availableDateObjects.some((availableDate) => 
+    return availableDateObjects.some((availableDate) =>
       isSameDay(date, availableDate)
     );
   };
@@ -35,7 +33,7 @@ export function CalendarPicker({
 
   return (
     <div className="flex justify-center">
-      <div className="glass-primary-panel p-1">
+      <div className="bg-white border border-border rounded-xl p-1 shadow-card">
         <Calendar
           mode="single"
           selected={selectedDateObj}
@@ -43,7 +41,7 @@ export function CalendarPicker({
           month={month}
           onMonthChange={setMonth}
           disabled={(date) => !isDateAvailable(date)}
-          className={cn("p-3 pointer-events-auto")}
+          className="p-3 pointer-events-auto"
           classNames={{
             day_selected: "bg-accent text-accent-foreground hover:bg-accent/90",
             day_today: "bg-secondary text-foreground",

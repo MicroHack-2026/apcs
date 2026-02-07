@@ -104,7 +104,7 @@ export function BookingModal({
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[480px] glass-strong glass-round border-[rgba(87,106,255,0.25)]">
+      <DialogContent className="sm:max-w-[480px]">
         {step === "select" ? (
           <>
             <DialogHeader>
@@ -127,7 +127,7 @@ export function BookingModal({
               </div>
 
               {selectedDate && (
-                <div className="animate-fade-in glass-primary-panel p-4">
+                <div className="animate-fade-in bg-secondary/30 border border-border rounded-xl p-4">
                   <TimeSlotsPicker
                     availableHours={availableHours}
                     selectedHour={selectedHour}
@@ -139,7 +139,7 @@ export function BookingModal({
 
             <DialogFooter className="gap-2">
               <Button
-                variant="glass-outline"
+                variant="outline"
                 onClick={handleClose}
                 disabled={createBookingMutation.isPending}
               >
@@ -163,7 +163,7 @@ export function BookingModal({
             </DialogHeader>
 
             <div className="py-6 space-y-6">
-              <div className="space-y-2 p-4 glass-primary-panel">
+              <div className="space-y-2 p-4 bg-secondary/30 border border-border rounded-xl">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Booking ID:</span>
                   <span className="font-medium">{booking?.bookingId}</span>

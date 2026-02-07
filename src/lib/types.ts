@@ -8,6 +8,11 @@ export interface ContainerItem {
   scheduled?: boolean;
   appointmentDate?: string;
   appointmentHour?: string;
+  enterprise?: string;
+  port?: string;
+  terminal?: string;
+  lat?: number;
+  lng?: number;
 }
 
 export interface SlotAvailability {
@@ -26,12 +31,31 @@ export interface BookingResult {
   message: string;
 }
 
+export interface Booking {
+  bookingId: string;
+  containerId: string;
+  date: string;
+  time: string;
+  status: "Scheduled" | "Completed" | "Cancelled";
+  enterprise: string;
+  createdAt: string;
+  scannedAt?: string;
+}
+
+export interface ScanEvent {
+  id: string;
+  bookingId: string;
+  containerId: string;
+  timestamp: string;
+  decodedPayload: string;
+  confirmed: boolean;
+}
+
 export interface UserSession {
   role: Role;
   username: string;
 }
 
-// User management types
 export interface User {
   id: string;
   name: string;
@@ -41,7 +65,6 @@ export interface User {
   createdAt: string;
 }
 
-// Enterprise Owner types
 export interface EnterpriseOwner {
   id: string;
   companyName: string;
@@ -52,7 +75,6 @@ export interface EnterpriseOwner {
   createdAt: string;
 }
 
-// Slot management types
 export type SlotStatus = "Open" | "Closed" | "Maintenance";
 
 export interface Slot {
@@ -66,7 +88,6 @@ export interface Slot {
   comment?: string;
 }
 
-// Platform settings types
 export interface PlatformSettings {
   platformName: string;
   defaultTimeZone: string;
@@ -76,4 +97,11 @@ export interface PlatformSettings {
   notifyOnArrival: boolean;
   notifyOnCancellation: boolean;
   maintenanceMode: boolean;
+}
+
+export interface ChartDataPoint {
+  date: string;
+  appointments: number;
+  arrived: number;
+  notArrived: number;
 }

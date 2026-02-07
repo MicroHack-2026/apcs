@@ -15,16 +15,16 @@ export function StatusFilterTabs({ activeFilter, onFilterChange }: StatusFilterT
   ];
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 bg-secondary rounded-lg p-1">
       {filters.map((filter) => (
         <button
           key={filter.value}
           onClick={() => onFilterChange(filter.value)}
           className={cn(
-            "px-3 py-1.5 text-sm font-medium rounded-md transition-colors duration-150",
+            "px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-150",
             activeFilter === filter.value
-              ? "bg-accent text-accent-foreground"
-              : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+              ? "bg-accent text-white shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
           )}
         >
           {filter.label}
