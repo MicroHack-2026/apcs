@@ -106,6 +106,7 @@ Currently, all services use in-memory mock data. The `apiClient.ts` is a placeho
 
 - Node.js 18+ (or Bun)
 - npm, yarn, or bun package manager
+- Spring Boot backend (optional - app works with mock data by default)
 
 ### Installation
 
@@ -124,6 +125,29 @@ npm run preview
 ```
 
 The application will be available at `http://localhost:8080`
+
+### Backend Integration
+
+The application is set up to work with a Spring Boot backend. By default, it uses mock data for development.
+
+**To connect to a Spring Boot backend:**
+
+1. Copy `env.example` to `.env`:
+   ```bash
+   cp env.example .env
+   ```
+
+2. Update `.env` file:
+   ```env
+   VITE_API_BASE_URL=http://localhost:8080/api
+   VITE_USE_MOCK_DATA=false
+   ```
+
+3. Ensure your Spring Boot backend is running on `http://localhost:8080`
+
+4. The frontend will automatically use the real API instead of mock data
+
+**See `API_ENDPOINTS.md` for complete API documentation** that your backend developer needs to implement.
 
 ### Login
 
@@ -388,12 +412,45 @@ The application uses a custom glass morphism design system:
 
 ## Development Notes
 
-### Mock Data
-All services currently use in-memory mock data. To integrate with a real backend:
-1. Implement `apiClient.ts` with actual HTTP requests
-2. Update each service to use `apiClient` instead of mock data
-3. Handle authentication tokens
-4. Add error handling and retry logic
+### Backend Integration Setup
+
+The codebase is **fully prepared for Spring Boot backend integration**:
+
+1. **API Client** (`src/services/apiClient.ts`):
+   - Complete fetch-based HTTP client
+   - Automatic JWT token handling
+   - Error handling and response parsing
+   - Supports Spring Boot ResponseEntity format
+
+2. **Service Layer**:
+   - All services support both mock and real API
+   - Controlled via `VITE_USE_MOCK_DATA` environment variable
+   - Automatic fallback to mock data if API unavailable
+
+3. **Configuration**:
+   - Environment-based API URL configuration
+   - Token management via localStorage
+   - CORS-ready for Spring Boot
+
+4. **API Documentation**:
+   - Complete endpoint documentation in `API_ENDPOINTS.md`
+   - Request/response formats specified
+   - Error handling guidelines included
+
+### Switching Between Mock and Real API
+
+**Use Mock Data (Default):**
+```env
+VITE_USE_MOCK_DATA=true
+```
+
+**Use Real API:**
+```env
+VITE_USE_MOCK_DATA=false
+VITE_API_BASE_URL=http://localhost:8080/api
+```
+
+The application automatically detects the configuration and uses the appropriate data source.
 
 ### Testing
 - Test files in `src/test/`

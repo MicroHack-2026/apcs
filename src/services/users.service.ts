@@ -1,4 +1,6 @@
 import { User, Role } from "@/lib/types";
+import { apiClient } from "./apiClient";
+import { USE_MOCK_DATA } from "./config";
 
 // Mock users data
 const mockUsers: User[] = [
@@ -13,41 +15,107 @@ const mockUsers: User[] = [
 let users = [...mockUsers];
 
 export const usersService = {
+  /**
+   * Get all users
+   * Uses real API if VITE_USE_MOCK_DATA=false
+   */
   getUsers: async (): Promise<User[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    return [...users];
+    if (USE_MOCK_DATA) {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      return [...users];
+    }
+
+    try {
+      const response = await apiClient.get<User[]>("/users");
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
   },
 
+  /**
+   * Get user by ID
+   */
   getUserById: async (id: string): Promise<User | undefined> => {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    return users.find((u) => u.id === id);
+    if (USE_MOCK_DATA) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      return users.find((u) => u.id === id);
+    }
+
+    try {
+      const response = await apiClient.get<User>(`/users/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error;
+    }
   },
 
+  /**
+   * Create a new user
+   */
   createUser: async (userData: Omit<User, "id" | "createdAt">): Promise<User> => {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    const newUser: User = {
-      ...userData,
-      id: `USR-${String(users.length + 1).padStart(3, "0")}`,
-      createdAt: new Date().toISOString().split("T")[0],
-    };
-    users.push(newUser);
-    return newUser;
+    if (USE_MOCK_DATA) {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      const newUser: User = {
+        ...userData,
+        id: `USR-${String(users.length + 1).padStart(3, "0")}`,
+        createdAt: new Date().toISOString().split("T")[0],
+      };
+      users.push(newUser);
+      return newUser;
+    }
+
+    try {
+      const response = await apiClient.post<User>("/users", userData);
+      return response.data!;
+    } catch (error) {
+      console.error("Error creating user:", error);
+      throw error;
+    }
   },
 
+  /**
+   * Update user
+   */
   updateUser: async (id: string, updates: Partial<User>): Promise<User | undefined> => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    const index = users.findIndex((u) => u.id === id);
-    if (index === -1) return undefined;
-    users[index] = { ...users[index], ...updates };
-    return users[index];
+    if (USE_MOCK_DATA) {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      const index = users.findIndex((u) => u.id === id);
+      if (index === -1) return undefined;
+      users[index] = { ...users[index], ...updates };
+      return users[index];
+    }
+
+    try {
+      const response = await apiClient.put<User>(`/users/${id}`, updates);
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw error;
+    }
   },
 
+  /**
+   * Toggle user status (Active/Disabled)
+   */
   toggleUserStatus: async (id: string): Promise<User | undefined> => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    const index = users.findIndex((u) => u.id === id);
-    if (index === -1) return undefined;
-    users[index].status = users[index].status === "Active" ? "Disabled" : "Active";
-    return users[index];
+    if (USE_MOCK_DATA) {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      const index = users.findIndex((u) => u.id === id);
+      if (index === -1) return undefined;
+      users[index].status = users[index].status === "Active" ? "Disabled" : "Active";
+      return users[index];
+    }
+
+    try {
+      const response = await apiClient.patch<User>(`/users/${id}/toggle-status`);
+      return response.data;
+    } catch (error) {
+      console.error("Error toggling user status:", error);
+      throw error;
+    }
   },
 
   reset: (): void => {

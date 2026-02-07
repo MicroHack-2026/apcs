@@ -1,6 +1,8 @@
 import { BookingRequest, BookingResult } from "@/lib/types";
 import { containersService } from "./containers.service";
 import { generateBookingId } from "@/lib/id";
+import { apiClient } from "./apiClient";
+import { USE_MOCK_DATA } from "./config";
 
 // Mock pickup availability data
 interface PickupAvailability {
@@ -51,38 +53,105 @@ export interface BookingConfirmation {
 }
 
 export const bookingService = {
-  getPickupAvailability: async (_containerId: string): Promise<PickupAvailability> => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    return pickupAvailability;
+  /**
+   * Get pickup availability for a container
+   */
+  getPickupAvailability: async (containerId: string): Promise<PickupAvailability> => {
+    if (USE_MOCK_DATA) {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      return pickupAvailability;
+    }
+
+    try {
+      const response = await apiClient.get<PickupAvailability>(`/bookings/availability/${containerId}`);
+      return response.data!;
+    } catch (error) {
+      console.error("Error fetching pickup availability:", error);
+      throw error;
+    }
   },
 
+  /**
+   * Get available dates for booking
+   */
   getAvailableDates: async (): Promise<string[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    return pickupAvailability.availableDates;
+    if (USE_MOCK_DATA) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      return pickupAvailability.availableDates;
+    }
+
+    try {
+      const availability = await bookingService.getPickupAvailability("");
+      return availability.availableDates;
+    } catch (error) {
+      console.error("Error fetching available dates:", error);
+      throw error;
+    }
   },
 
+  /**
+   * Get available hours for a specific date
+   */
   getAvailableHours: async (date: string): Promise<string[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    return pickupAvailability.timesByDate[date] || [];
+    if (USE_MOCK_DATA) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      return pickupAvailability.timesByDate[date] || [];
+    }
+
+    try {
+      const availability = await bookingService.getPickupAvailability("");
+      return availability.timesByDate[date] || [];
+    } catch (error) {
+      console.error("Error fetching available hours:", error);
+      throw error;
+    }
   },
 
+  /**
+   * Create a new booking/appointment
+   */
   createBooking: async (request: BookingRequest): Promise<BookingResult & { bookingId?: string }> => {
-    await new Promise((resolve) => setTimeout(resolve, 400));
+    if (USE_MOCK_DATA) {
+      await new Promise((resolve) => setTimeout(resolve, 400));
 
-    const bookingId = generateBookingId();
+      const bookingId = generateBookingId();
 
-    // Update container with appointment info
-    await containersService.updateContainer(request.containerId, {
-      scheduled: true,
-      appointmentDate: request.date,
-      appointmentHour: request.hour,
-    });
+      // Update container with appointment info
+      await containersService.updateContainer(request.containerId, {
+        scheduled: true,
+        appointmentDate: request.date,
+        appointmentHour: request.hour,
+      });
 
-    return {
-      success: true,
-      message: `Appointment scheduled for ${request.date} at ${request.hour}`,
-      bookingId,
-    };
+      return {
+        success: true,
+        message: `Appointment scheduled for ${request.date} at ${request.hour}`,
+        bookingId,
+      };
+    }
+
+    try {
+      const response = await apiClient.post<{
+        bookingId: string;
+        containerId: string;
+        date: string;
+        time: string;
+        status: string;
+      }>("/bookings", {
+        containerId: request.containerId,
+        date: request.date,
+        hour: request.hour,
+      });
+
+      return {
+        success: true,
+        message: response.message || `Appointment scheduled for ${request.date} at ${request.hour}`,
+        bookingId: response.data?.bookingId,
+      };
+    } catch (error) {
+      console.error("Error creating booking:", error);
+      throw error;
+    }
   },
 
   generateQrPayload: (booking: BookingConfirmation): string => {
