@@ -47,7 +47,6 @@ const App = () => (
         <Routes>
           <Route path="/login" element={<LoginPage />} />
 
-          {/* Enterprise Routes */}
           <Route
             path="/enterprise"
             element={
@@ -81,7 +80,6 @@ const App = () => (
             }
           />
 
-          {/* Admin Routes */}
           <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
           <Route
             path="/admin/dashboard"
@@ -124,7 +122,6 @@ const App = () => (
             }
           />
 
-          {/* Manager Routes */}
           <Route path="/manager" element={<Navigate to="/manager/scan" replace />} />
           <Route
             path="/manager/scan"
@@ -135,7 +132,6 @@ const App = () => (
             }
           />
 
-          {/* Default */}
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>

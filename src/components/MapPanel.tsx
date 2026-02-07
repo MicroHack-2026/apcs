@@ -2,14 +2,6 @@ interface MapPanelProps {
   className?: string;
 }
 
-/**
- * MapPanel - Placeholder component for future MapCN integration
- * 
- * To use MapCN, install with:
- * npx shadcn@latest add https://mapcn.dev/maps/map.json
- * 
- * Then import and use the Map component from mapcn
- */
 export function MapPanel({ className }: MapPanelProps) {
   return (
     <div className={className}>

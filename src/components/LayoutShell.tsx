@@ -29,7 +29,6 @@ export function LayoutShell({ children, title, showSidebar = true, role = "ADMIN
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Top bar */}
       <div className="h-14 flex items-center justify-between px-6 border-b border-border bg-white/80 backdrop-blur-sm sticky top-0 z-40">
         <div className="flex items-center gap-2.5">
           <span className="font-semibold text-foreground text-lg tracking-tight">
@@ -42,12 +41,10 @@ export function LayoutShell({ children, title, showSidebar = true, role = "ADMIN
         <TopBar showSearch={true} minimal />
       </div>
 
-      {/* Main content with bottom padding for dock */}
       <main className="flex-1 p-6 pb-24 overflow-auto bg-secondary/30">
         {children}
       </main>
 
-      {/* Bottom Dock Navigation */}
       <DockNav role={role} />
     </div>
   );

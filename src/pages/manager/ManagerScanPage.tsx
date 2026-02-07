@@ -50,12 +50,10 @@ export default function ManagerScanPage() {
           await scannerRef.current.stop();
         }
       } catch {
-        // Ignore stop errors
       }
       try {
         scannerRef.current.clear();
       } catch {
-        // Ignore clear errors
       }
       scannerRef.current = null;
     }
@@ -185,7 +183,6 @@ export default function ManagerScanPage() {
       <main className="flex-1 p-6">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Scanner Column */}
             <div className="space-y-4">
               <div className="text-center">
                 <h1 className="text-2xl font-semibold text-foreground">Scan QR Code</h1>
@@ -292,7 +289,6 @@ export default function ManagerScanPage() {
               </div>
             </div>
 
-            {/* Recent Scans Column */}
             <div className="space-y-4">
               <h2 className="text-lg font-semibold text-foreground">Recent Scans</h2>
               <div className="bg-white border border-border rounded-xl shadow-card overflow-hidden">

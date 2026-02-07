@@ -13,9 +13,6 @@ function project(lat: number, lng: number, width: number, height: number): [numb
   return [x, y];
 }
 
-/* ─── Simplified continent SVG paths (equirectangular projection) ─── */
-/* Coordinates scaled for viewBox 0 0 800 400 */
-
 const CONTINENTS = [
   {
     name: "North America",
@@ -110,10 +107,8 @@ export function WorldContainerMap({ containers, className }: WorldContainerMapPr
           className="w-full h-auto block"
           style={{ maxHeight: 340 }}
         >
-          {/* Background */}
           <rect width={width} height={height} fill="hsl(210 40% 98%)" />
 
-          {/* Grid lines */}
           {Array.from({ length: 7 }).map((_, i) => {
             const x = (width / 8) * (i + 1);
             return (
@@ -135,13 +130,11 @@ export function WorldContainerMap({ containers, className }: WorldContainerMapPr
             );
           })}
 
-          {/* Equator */}
           <line
             x1={0} y1={height / 2} x2={width} y2={height / 2}
             stroke="hsl(210 15% 88%)" strokeWidth={0.8} strokeDasharray="6 4"
           />
 
-          {/* Continent shapes */}
           {CONTINENTS.map((continent) => (
             <path
               key={continent.name}
@@ -153,7 +146,6 @@ export function WorldContainerMap({ containers, className }: WorldContainerMapPr
             />
           ))}
 
-          {/* Not arrived markers (with pulse animation) */}
           {notArrived.map((p, i) => (
             <g key={`na-${i}`}>
               <circle cx={p.x} cy={p.y} r={8} fill="hsl(0 72% 51% / 0.08)" stroke="none">
@@ -186,7 +178,6 @@ export function WorldContainerMap({ containers, className }: WorldContainerMapPr
             </g>
           ))}
 
-          {/* Arrived markers */}
           {arrived.map((p, i) => (
             <g key={`a-${i}`}>
               <circle
@@ -203,7 +194,6 @@ export function WorldContainerMap({ containers, className }: WorldContainerMapPr
             </g>
           ))}
 
-          {/* Tooltip overlays */}
           {points.map((p) => (
             <g key={`tooltip-${p.id}`}>
               <circle
@@ -216,7 +206,6 @@ export function WorldContainerMap({ containers, className }: WorldContainerMapPr
                 onMouseLeave={() => setHoveredId(null)}
               />
 
-              {/* Tooltip popup */}
               {hoveredId === p.id && (
                 <g>
                   <rect

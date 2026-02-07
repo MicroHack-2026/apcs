@@ -14,8 +14,6 @@ import {
   type LucideProps,
 } from "lucide-react";
 
-/* ─── Nav items per role ──────────────────────────────────── */
-
 interface DockNavItem {
   label: string;
   to: string;
@@ -49,8 +47,6 @@ function getNavItems(role: Role): DockNavItem[] {
   }
 }
 
-/* ─── Magnification config ────────────────────────────────── */
-
 const DOCK_CONFIG = {
   baseSize: 48,
   maxSize: 68,
@@ -61,8 +57,6 @@ const DOCK_CONFIG = {
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * Math.max(0, Math.min(1, t));
 }
-
-/* ─── Spring hook for smooth size animation ───────────────── */
 
 function useSpringSize(target: number) {
   const [size, setSize] = useState(target);
@@ -96,8 +90,6 @@ function useSpringSize(target: number) {
   return size;
 }
 
-/* ─── Compute target size from mouseX ─────────────────────── */
-
 function useTargetSize(mouseX: number | null, elRef: React.RefObject<HTMLElement | null>) {
   const [target, setTarget] = useState(DOCK_CONFIG.baseSize);
 
@@ -123,8 +115,6 @@ function useTargetSize(mouseX: number | null, elRef: React.RefObject<HTMLElement
   return target;
 }
 
-/* ─── DockItem ─────────────────────────────────────────────── */
-
 interface DockItemProps {
   item: DockNavItem;
   mouseX: number | null;
@@ -143,7 +133,6 @@ function DockItem({ item, mouseX }: DockItemProps) {
 
   return (
     <div className="relative flex flex-col items-center group" style={{ width: size }}>
-      {/* Tooltip */}
       <div
         className={cn(
           "absolute -top-10 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-lg",
@@ -173,15 +162,12 @@ function DockItem({ item, mouseX }: DockItemProps) {
         />
       </NavLink>
 
-      {/* Active indicator dot */}
       {isActive && (
         <div className="absolute -bottom-1 w-1 h-1 rounded-full bg-accent" />
       )}
     </div>
   );
 }
-
-/* ─── Logout DockItem ─────────────────────────────────────── */
 
 interface LogoutDockItemProps {
   mouseX: number | null;
@@ -229,8 +215,6 @@ function LogoutDockItem({ mouseX }: LogoutDockItemProps) {
   );
 }
 
-/* ─── Main DockNav ────────────────────────────────────────── */
-
 interface DockNavProps {
   role: Role;
 }
@@ -267,10 +251,8 @@ export function DockNav({ role }: DockNavProps) {
           />
         ))}
 
-        {/* Separator */}
         <div className="w-px h-8 bg-border/40 mx-1.5 self-center flex-shrink-0" />
 
-        {/* Logout */}
         <LogoutDockItem mouseX={mouseX} />
       </div>
     </div>

@@ -47,8 +47,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-/* ─── Chart configs ──────────────────────────────────────── */
-
 const areaChartConfig = {
   appointments: {
     label: "Appointments",
@@ -85,8 +83,6 @@ const pieChartConfig = {
   },
 } satisfies ChartConfig;
 
-/* ─── Animated counter hook ──────────────────────────────── */
-
 function useAnimatedNumber(target: number, duration = 800) {
   const [display, setDisplay] = useState(0);
   const prevRef = useRef(0);
@@ -118,8 +114,6 @@ function useAnimatedNumber(target: number, duration = 800) {
   return display;
 }
 
-/* ─── Stagger animation wrapper ──────────────────────────── */
-
 function StaggerItem({ index, children, className }: { index: number; children: React.ReactNode; className?: string }) {
   return (
     <div
@@ -133,8 +127,6 @@ function StaggerItem({ index, children, className }: { index: number; children: 
     </div>
   );
 }
-
-/* ─── Main Dashboard ─────────────────────────────────────── */
 
 export default function AdminDashboardPage() {
   const { data: stats, isLoading: statsLoading } = useAdminStats();
@@ -193,7 +185,6 @@ export default function AdminDashboardPage() {
 
   const kpi = liveKpi || stats;
 
-  // Pie data for ChartContainer
   const pieData = useMemo(() => {
     if (!kpi) return [];
     return [
@@ -203,7 +194,6 @@ export default function AdminDashboardPage() {
     ];
   }, [kpi]);
 
-  // Map markers from containers
   const mapMarkers: MapMarker[] = useMemo(() => {
     return containers
       .filter((c) => c.lat !== undefined && c.lng !== undefined)
@@ -216,7 +206,6 @@ export default function AdminDashboardPage() {
       }));
   }, [containers]);
 
-  // Animated numbers
   const animTotal = useAnimatedNumber(kpi?.totalContainers ?? 0);
   const animArrived = useAnimatedNumber(kpi?.arrivedCount ?? 0);
   const animNotArrived = useAnimatedNumber(kpi?.notArrivedCount ?? 0);
@@ -249,7 +238,6 @@ export default function AdminDashboardPage() {
   return (
     <LayoutShell showSidebar={true} role="ADMIN">
       <div className="space-y-6">
-        {/* Header */}
         <div className="flex items-end justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-foreground">Dashboard</h1>
@@ -266,10 +254,7 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* ────────── Row 1: Three Rich Stat Cards ────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-
-          {/* ── Card 1: Container Overview ── */}
           <StaggerItem index={0}>
             <Card className="border-border/50 shadow-card hover:shadow-card-hover transition-shadow duration-300">
               <CardHeader className="pb-4 pt-5 px-5 flex-row items-start justify-between space-y-0">
@@ -286,7 +271,6 @@ export default function AdminDashboardPage() {
               </CardHeader>
               <CardContent className="px-5 pb-5 space-y-4">
                 <div className="flex items-stretch gap-x-5">
-                  {/* Arrived */}
                   <div className="flex-1 flex flex-col items-start gap-1">
                     <div className="flex items-center gap-1.5">
                       <span className="text-2xl font-bold text-foreground tabular-nums">{animArrived}</span>
@@ -307,7 +291,6 @@ export default function AdminDashboardPage() {
 
                   <div className="w-px bg-border self-stretch" />
 
-                  {/* Not Arrived */}
                   <div className="flex-1 flex flex-col items-start gap-1">
                     <div className="flex items-center gap-1.5">
                       <span className="text-2xl font-bold text-foreground tabular-nums">{animNotArrived}</span>
@@ -352,7 +335,6 @@ export default function AdminDashboardPage() {
             </Card>
           </StaggerItem>
 
-          {/* ── Card 2: Platform Performance ── */}
           <StaggerItem index={1}>
             <Card className="border-border/50 shadow-card hover:shadow-card-hover transition-shadow duration-300">
               <CardHeader className="pb-3 pt-5 px-5 flex-row items-start justify-between space-y-0">
@@ -416,7 +398,6 @@ export default function AdminDashboardPage() {
             </Card>
           </StaggerItem>
 
-          {/* ── Card 3: Operations Summary (dark) ── */}
           <StaggerItem index={2}>
             <Card className="bg-zinc-900 border-0 shadow-xl text-white hover:shadow-2xl transition-shadow duration-300">
               <CardHeader className="pb-2 pt-5 px-5 space-y-0">
@@ -458,7 +439,6 @@ export default function AdminDashboardPage() {
           </StaggerItem>
         </div>
 
-        {/* ────────── Row 2: Quick KPI Tiles ────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           {[
             { icon: Box, label: "Containers", value: animTotal, color: "text-foreground" },
@@ -480,10 +460,7 @@ export default function AdminDashboardPage() {
           ))}
         </div>
 
-        {/* ────────── Row 3: Charts ────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-
-          {/* ── Appointments per Day — Area Chart ── */}
           <StaggerItem index={9}>
             <Card className="border-border/50 shadow-card">
               <CardHeader className="pb-2 pt-5 px-5 flex-row items-center justify-between space-y-0">
@@ -555,7 +532,6 @@ export default function AdminDashboardPage() {
             </Card>
           </StaggerItem>
 
-          {/* ── Arrived vs Not Arrived — Bar Chart ── */}
           <StaggerItem index={10}>
             <Card className="border-border/50 shadow-card">
               <CardHeader className="pb-2 pt-5 px-5 space-y-0">
@@ -593,7 +569,6 @@ export default function AdminDashboardPage() {
             </Card>
           </StaggerItem>
 
-          {/* ── Status Distribution — Pie Chart with Labels ── */}
           <StaggerItem index={11}>
             <Card className="flex flex-col border-border/50 shadow-card">
               <CardHeader className="items-center pb-0 pt-5 px-5">
@@ -622,7 +597,6 @@ export default function AdminDashboardPage() {
             </Card>
           </StaggerItem>
 
-          {/* ── Upcoming Appointments ── */}
           <StaggerItem index={12}>
             <Card className="border-border/50 shadow-card">
               <CardHeader className="pb-3 pt-5 px-5 flex-row items-center justify-between space-y-0">
@@ -661,7 +635,6 @@ export default function AdminDashboardPage() {
           </StaggerItem>
         </div>
 
-        {/* ────────── Row 4: Container Map ────────── */}
         <StaggerItem index={13}>
           <Card className="border-border/50 shadow-card overflow-hidden">
             <CardHeader className="pb-2 pt-5 px-5 flex-row items-center justify-between space-y-0">

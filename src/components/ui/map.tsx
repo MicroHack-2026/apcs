@@ -10,8 +10,6 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { cn } from "@/lib/utils";
 
-/* ─── Types ────────────────────────────────────────────────── */
-
 export interface MapRef {
   getMap: () => maplibregl.Map | null;
   easeTo: (options: maplibregl.EaseToOptions) => void;
@@ -27,28 +25,20 @@ export interface MapMarker {
 }
 
 export interface MapProps {
-  /** [lng, lat] */
   center?: [number, number];
   zoom?: number;
   className?: string;
   children?: ReactNode;
-  /** Custom tile styles */
   styles?: {
     light: string;
     dark?: string;
   };
-  /** Markers to display */
   markers?: MapMarker[];
-  /** Callback on map load */
   onLoad?: (map: maplibregl.Map) => void;
 }
 
-/* ─── Default style (Carto Positron) ───────────────────────── */
-
 const DEFAULT_STYLE =
   "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
-
-/* ─── Component ────────────────────────────────────────────── */
 
 const Map = forwardRef<MapRef, MapProps>(
   ({ center = [0, 20], zoom = 2, className, styles, markers, onLoad }, ref) => {
@@ -63,7 +53,6 @@ const Map = forwardRef<MapRef, MapProps>(
       flyTo: (opts) => mapRef.current?.flyTo(opts),
     }));
 
-    // Initialize map
     useEffect(() => {
       if (!containerRef.current) return;
 
@@ -98,11 +87,9 @@ const Map = forwardRef<MapRef, MapProps>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [styles?.light]);
 
-    // Sync markers
     useEffect(() => {
       if (!mapRef.current || !isLoaded) return;
 
-      // Remove old markers
       markersRef.current.forEach((m) => m.remove());
       markersRef.current = [];
 

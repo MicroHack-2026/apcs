@@ -37,7 +37,6 @@ export function EnterpriseCalendarView({ containers, onContainerClick }: Enterpr
 
   return (
     <div className="space-y-4">
-      {/* Calendar Header */}
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">
           {format(currentWeekStart, "MMMM yyyy")}
@@ -52,9 +51,7 @@ export function EnterpriseCalendarView({ containers, onContainerClick }: Enterpr
         </div>
       </div>
 
-      {/* Calendar Grid */}
       <div className="border border-border rounded-lg overflow-hidden">
-        {/* Day Headers */}
         <div className="grid grid-cols-8 bg-secondary/30">
           <div className="p-3 border-r border-border text-sm font-medium text-muted-foreground">
             Time
@@ -74,7 +71,6 @@ export function EnterpriseCalendarView({ containers, onContainerClick }: Enterpr
           ))}
         </div>
 
-        {/* Time Slots */}
         {timeSlots.map((slot) => (
           <div key={slot} className="grid grid-cols-8 border-t border-border">
             <div className="p-3 border-r border-border text-sm text-muted-foreground bg-secondary/10">

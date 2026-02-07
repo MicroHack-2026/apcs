@@ -6,9 +6,6 @@ export interface QrCanvasOptions {
   border?: number;
 }
 
-/**
- * Draws a QR code to a canvas element
- */
 export function drawQrCodeToCanvas(
   canvas: HTMLCanvasElement,
   text: string,
@@ -26,11 +23,9 @@ export function drawQrCodeToCanvas(
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
-  // Fill background
   ctx.fillStyle = lightColor;
   ctx.fillRect(0, 0, size, size);
 
-  // Draw modules
   ctx.fillStyle = darkColor;
   for (let y = 0; y < qr.size; y++) {
     for (let x = 0; x < qr.size; x++) {
@@ -46,16 +41,10 @@ export function drawQrCodeToCanvas(
   }
 }
 
-/**
- * Converts canvas to PNG data URL
- */
 export function canvasToDataUrl(canvas: HTMLCanvasElement): string {
   return canvas.toDataURL("image/png");
 }
 
-/**
- * Triggers download of canvas as PNG image
- */
 export function downloadCanvasAsImage(
   canvas: HTMLCanvasElement,
   filename: string
