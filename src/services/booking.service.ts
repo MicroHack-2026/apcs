@@ -4,13 +4,11 @@ import { generateBookingId } from "@/lib/id";
 import { apiClient } from "./apiClient";
 import { USE_MOCK_DATA } from "./config";
 
-// Mock pickup availability data
 interface PickupAvailability {
   availableDates: string[];
   timesByDate: Record<string, string[]>;
 }
 
-// Generate mock availability for next 14 days with 30-minute slots
 const generatePickupAvailability = (): PickupAvailability => {
   const availableDates: string[] = [];
   const timesByDate: Record<string, string[]> = {};
@@ -21,13 +19,11 @@ const generatePickupAvailability = (): PickupAvailability => {
     date.setDate(today.getDate() + i);
     const dayOfWeek = date.getDay();
 
-    // Skip weekends
     if (dayOfWeek === 0 || dayOfWeek === 6) continue;
 
     const dateStr = date.toISOString().split("T")[0];
     availableDates.push(dateStr);
 
-    // Generate 30-minute time slots from 08:00 to 18:00
     const allSlots = [
       "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
       "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
@@ -35,7 +31,6 @@ const generatePickupAvailability = (): PickupAvailability => {
       "17:00", "17:30"
     ];
 
-    // Randomly make some slots unavailable (simulate bookings)
     const availableSlots = allSlots.filter(() => Math.random() > 0.3);
     timesByDate[dateStr] = availableSlots.length > 0 ? availableSlots : allSlots.slice(0, 4);
   }
@@ -53,9 +48,6 @@ export interface BookingConfirmation {
 }
 
 export const bookingService = {
-  /**
-   * Get pickup availability for a container
-   */
   getPickupAvailability: async (containerId: string): Promise<PickupAvailability> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -71,9 +63,6 @@ export const bookingService = {
     }
   },
 
-  /**
-   * Get available dates for booking
-   */
   getAvailableDates: async (): Promise<string[]> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -89,9 +78,6 @@ export const bookingService = {
     }
   },
 
-  /**
-   * Get available hours for a specific date
-   */
   getAvailableHours: async (date: string): Promise<string[]> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -107,16 +93,12 @@ export const bookingService = {
     }
   },
 
-  /**
-   * Create a new booking/appointment
-   */
   createBooking: async (request: BookingRequest): Promise<BookingResult & { bookingId?: string }> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 400));
 
       const bookingId = generateBookingId();
 
-      // Update container with appointment info
       await containersService.updateContainer(request.containerId, {
         scheduled: true,
         appointmentDate: request.date,
@@ -163,7 +145,6 @@ export const bookingService = {
     });
   },
 
-  // Reset mock data
   reset: (): void => {
     pickupAvailability = generatePickupAvailability();
   },

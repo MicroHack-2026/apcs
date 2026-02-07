@@ -3,14 +3,9 @@ import { mockContainers } from "@/lib/mockData";
 import { apiClient } from "./apiClient";
 import { USE_MOCK_DATA } from "./config";
 
-// In-memory state for mock updates
 let containers = [...mockContainers];
 
 export const containersService = {
-  /**
-   * Get all containers
-   * Uses real API if VITE_USE_MOCK_DATA=false
-   */
   getContainers: async (): Promise<ContainerItem[]> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 300));
@@ -26,9 +21,6 @@ export const containersService = {
     }
   },
   
-  /**
-   * Get container by ID
-   */
   getContainerById: async (id: string): Promise<ContainerItem | undefined> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -44,9 +36,6 @@ export const containersService = {
     }
   },
   
-  /**
-   * Update container (e.g., mark as arrived, set appointment)
-   */
   updateContainer: async (id: string, updates: Partial<ContainerItem>): Promise<ContainerItem | undefined> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -66,7 +55,6 @@ export const containersService = {
     }
   },
   
-  // Reset to mock data (for testing)
   reset: (): void => {
     containers = [...mockContainers];
   },

@@ -2,7 +2,6 @@ import { PlatformSettings } from "@/lib/types";
 import { apiClient } from "./apiClient";
 import { USE_MOCK_DATA } from "./config";
 
-// Mock platform settings
 let settings: PlatformSettings = {
   platformName: "Port Platform",
   defaultTimeZone: "UTC",
@@ -15,9 +14,6 @@ let settings: PlatformSettings = {
 };
 
 export const settingsService = {
-  /**
-   * Get platform settings
-   */
   getSettings: async (): Promise<PlatformSettings> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 150));
@@ -33,9 +29,6 @@ export const settingsService = {
     }
   },
 
-  /**
-   * Update platform settings
-   */
   updateSettings: async (updates: Partial<PlatformSettings>): Promise<PlatformSettings> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 300));

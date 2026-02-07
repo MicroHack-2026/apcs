@@ -1,4 +1,3 @@
-// Statistics service for dashboards
 import { apiClient } from "./apiClient";
 import { USE_MOCK_DATA } from "./config";
 
@@ -18,9 +17,6 @@ export interface RecentActivity {
 }
 
 export const statsService = {
-  /**
-   * Get admin dashboard statistics
-   */
   getAdminStats: async (): Promise<AdminStats> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -43,9 +39,6 @@ export const statsService = {
     }
   },
 
-  /**
-   * Get recent activity feed
-   */
   getRecentActivity: async (): Promise<RecentActivity[]> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 150));
@@ -79,7 +72,6 @@ export const statsService = {
       ];
     }
 
-    // TODO: Implement real API endpoint for upcoming appointments
     return [];
   },
 };

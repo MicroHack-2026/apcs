@@ -2,7 +2,6 @@ import { User, Role } from "@/lib/types";
 import { apiClient } from "./apiClient";
 import { USE_MOCK_DATA } from "./config";
 
-// Mock users data
 const mockUsers: User[] = [
   { id: "USR-001", name: "John Admin", email: "john.admin@port.com", role: "ADMIN", status: "Active", createdAt: "2025-12-01" },
   { id: "USR-002", name: "Sarah Manager", email: "sarah.manager@port.com", role: "MANAGER", status: "Active", createdAt: "2025-12-05" },
@@ -15,10 +14,6 @@ const mockUsers: User[] = [
 let users = [...mockUsers];
 
 export const usersService = {
-  /**
-   * Get all users
-   * Uses real API if VITE_USE_MOCK_DATA=false
-   */
   getUsers: async (): Promise<User[]> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -34,9 +29,6 @@ export const usersService = {
     }
   },
 
-  /**
-   * Get user by ID
-   */
   getUserById: async (id: string): Promise<User | undefined> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -52,9 +44,6 @@ export const usersService = {
     }
   },
 
-  /**
-   * Create a new user
-   */
   createUser: async (userData: Omit<User, "id" | "createdAt">): Promise<User> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 300));
@@ -76,9 +65,6 @@ export const usersService = {
     }
   },
 
-  /**
-   * Update user
-   */
   updateUser: async (id: string, updates: Partial<User>): Promise<User | undefined> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -97,9 +83,6 @@ export const usersService = {
     }
   },
 
-  /**
-   * Toggle user status (Active/Disabled)
-   */
   toggleUserStatus: async (id: string): Promise<User | undefined> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 200));

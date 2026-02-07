@@ -2,7 +2,6 @@ import { EnterpriseOwner } from "@/lib/types";
 import { apiClient } from "./apiClient";
 import { USE_MOCK_DATA } from "./config";
 
-// Mock enterprise owners data
 const mockEnterpriseOwners: EnterpriseOwner[] = [
   { id: "ENT-001", companyName: "Global Logistics Inc", ownerName: "Michael Chen", email: "mchen@globallogistics.com", containersCount: 45, status: "Active", createdAt: "2025-10-15" },
   { id: "ENT-002", companyName: "Pacific Shipping Co", ownerName: "Emma Wilson", email: "ewilson@pacificship.com", containersCount: 128, status: "Active", createdAt: "2025-09-20" },
@@ -14,10 +13,6 @@ const mockEnterpriseOwners: EnterpriseOwner[] = [
 let enterpriseOwners = [...mockEnterpriseOwners];
 
 export const enterpriseOwnersService = {
-  /**
-   * Get all enterprise owners
-   * Uses real API if VITE_USE_MOCK_DATA=false
-   */
   getEnterpriseOwners: async (): Promise<EnterpriseOwner[]> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -33,9 +28,6 @@ export const enterpriseOwnersService = {
     }
   },
 
-  /**
-   * Get enterprise owner by ID
-   */
   getEnterpriseOwnerById: async (id: string): Promise<EnterpriseOwner | undefined> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -51,9 +43,6 @@ export const enterpriseOwnersService = {
     }
   },
 
-  /**
-   * Create new enterprise owner
-   */
   createEnterpriseOwner: async (data: Omit<EnterpriseOwner, "id" | "createdAt" | "containersCount">): Promise<EnterpriseOwner> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 300));
@@ -76,9 +65,6 @@ export const enterpriseOwnersService = {
     }
   },
 
-  /**
-   * Update enterprise owner
-   */
   updateEnterpriseOwner: async (id: string, updates: Partial<EnterpriseOwner>): Promise<EnterpriseOwner | undefined> => {
     if (USE_MOCK_DATA) {
       await new Promise((resolve) => setTimeout(resolve, 200));

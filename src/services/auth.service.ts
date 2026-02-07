@@ -5,13 +5,8 @@ import { USE_MOCK_DATA } from "./config";
 const SESSION_KEY = "port_platform_session";
 
 export const authService = {
-  /**
-   * Login user and get authentication token
-   * Uses real API if VITE_USE_MOCK_DATA=false, otherwise uses mock data
-   */
   login: async (username: string, password: string, role: Role): Promise<UserSession> => {
     if (USE_MOCK_DATA) {
-      // Mock login - simulate network delay
       await new Promise((resolve) => setTimeout(resolve, 500));
       
       const session: UserSession = {
@@ -23,7 +18,6 @@ export const authService = {
       return session;
     }
 
-    // Real API call
     try {
       const response = await apiClient.post<{
         token: string;
@@ -39,12 +33,10 @@ export const authService = {
         role,
       });
 
-      // Store token
       if (response.data?.token) {
         setAuthToken(response.data.token);
       }
 
-      // Store session
       const session: UserSession = {
         role: response.data?.user?.role || role,
         username: response.data?.user?.username || username,
